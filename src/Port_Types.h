@@ -1,5 +1,5 @@
 /*
- * Created on Mon Aug 29 2022 11:20:57 PM
+ * Created on Sun Sep 04 2022 12:08:29 AM
  *
  * The MIT License (MIT)
  * Copyright (c) 2022 Aananth C N
@@ -18,37 +18,29 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-#ifndef PORT_H
-#define PORT_H
+#ifndef PORT_TYPES_H
+#define PORT_TYPES_H
 
-#include <Port_cfg.h>
 
-/////////////////////////////////////////////
-// Error codes
-/* Invalid Port Pin ID requested */
-#define PORT_E_PARAM_PIN                0x0A
-/* Port Pin not configured as changeable */
-#define PORT_E_DIRECTION_UNCHANGEABLE   0x0B
-/* API Port_Init service called with wrong parameter */
-#define PORT_E_INIT_FAILED              0x0C
-/* API Port_SetPinMode service called when mode is unchangeable. */
-#define PORT_E_PARAM_INVALID_MODE       0x0D
-/* API Port_SetPinMode service called when mode is unchangeable. */
-#define PORT_E_MODE_UNCHANGEABLE        0x0E
-/* API service called without module initialization */
-#define PORT_E_UNINIT                   0x0F
-/* APIs called with a Null Pointer */
-#define PORT_E_PARAM_POINTER            0x10
-
+#include <Std_Types.h>
 
 
 /////////////////////////////////////////////
-// Port Functions
-void Port_Init(const Port_ConfigType* ConfigPtr);
-void Port_SetPinDirection(Port_PinType Pin, Port_PinDirectionType Direction);
-void Port_RefreshPortDirection(void);
-void Port_GetVersionInfo(Std_VersionInfoType* versioninfo);
-void Port_SetPinMode(Port_PinType Pin,Port_PinModeType Mode);
+// Port data types
+typedef uint16 Port_PinType;
+
+
+typedef enum {
+        PORT_PIN_IN,
+        PORT_PIN_OUT
+} Port_PinDirectionType;
+
+
+typedef uint8 Port_PinModeType;
+
+#define PORT_PIN_LEVEL_LOW      0
+#define PORT_PIN_LEVEL_HIGH     1
+
 
 
 #endif
