@@ -1,5 +1,5 @@
 /*
- * Created on Sun Sep 04 2022 12:08:29 AM
+ * Created on Mon Sep 05 2022 6:02:18 PM
  *
  * The MIT License (MIT)
  * Copyright (c) 2022 Aananth C N
@@ -13,49 +13,27 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial
  * portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
  * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-#ifndef PORT_TYPES_H
-#define PORT_TYPES_H
+
+#include <Port.h>
+
+#include <brd_port.h>
 
 
-#include <Std_Types.h>
+void Port_Init(const Port_ConfigType* ConfigPtr) {
+	int i;
+	PortPin *pin;
 
+	if (NULL == ConfigPtr) {
+		// TODO: PORT_E_PARAM_POINTER
+		return;
+	}
 
-/////////////////////////////////////////////
-// Port data types
-typedef uint16 Port_PinType;
-
-
-typedef enum {
-        PORT_PIN_IN,
-        PORT_PIN_OUT
-} Port_PinDirectionType;
-
-
-typedef uint8 Port_PinModeType;
-
-#define PORT_PIN_LEVEL_LOW      0
-#define PORT_PIN_LEVEL_HIGH     1
-
-
-typedef enum {
-    PORT_PIN_MODE_ADC = 0xFF01,
-    PORT_PIN_MODE_CAN,
-    PORT_PIN_MODE_DIO,
-    PORT_PIN_MODE_DIO_GPT,
-    PORT_PIN_MODE_DIO_WDG,
-    PORT_PIN_MODE_FLEXRAY,
-    PORT_PIN_MODE_ICU,
-    PORT_PIN_MODE_LIN,
-    PORT_PIN_MODE_MEM,
-    PORT_PIN_MODE_PWM,
-    PORT_PIN_MODE_SPI
-} StdPinModesType;
-
-
-
-#endif
+	for (i = 0; i < ConfigPtr->num_pins; i++) {
+		brd_set_port_pad(ConfigPtr->pin[i].pin_id, &ConfigPtr->pin[i];
+	} 
+}
