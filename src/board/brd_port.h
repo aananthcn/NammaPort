@@ -24,7 +24,7 @@
 #include <port_types.h>
 
 
-void brd_set_port_pad(Port_PinType pin_id, Port_PinModeType mode);
+void brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg);
 
 
 #endif

@@ -20,6 +20,8 @@
  */
 
 #include <rp2040.h>
+#include <Port_cfg.h>
+#include <stddef.h>
 
 
 uint16 get_rp2040_mode(Port_PinModeType mode) {
@@ -53,19 +55,19 @@ uint16 get_rp2040_mode(Port_PinModeType mode) {
 
 /* Raspberry Pi specific port mode set function */
 void brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
-	uint8 brd_mode;
-	uint8 pin_level;
-	uint8 pin_dir;
+	uint32 brd_mode;
+	uint32 pin_level;
+	uint32 pin_dir;
 
 	/* input validation */
 	if (NULL == pin_cfg) {
-		return
+		return;
 	}
 
 	/* convert AUTOSAR pin mode to board specific pin mode */
-	brd_mode = pin_cfg->mode;
-	if (pin_cfg->mode >= PORT_PIN_MODE_ADC) {
-		brd_mode = get_rp2040_mode(pin_cfg->mode)
+	brd_mode = pin_cfg->pin_mode;
+	if (pin_cfg->pin_mode >= PORT_PIN_MODE_ADC) {
+		brd_mode = get_rp2040_mode(pin_cfg->pin_mode);
 	}
 
 	/* pin direction related settings */

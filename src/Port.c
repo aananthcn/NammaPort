@@ -20,6 +20,7 @@
  */
 
 #include <Port.h>
+#include <stddef.h>
 
 #include <brd_port.h>
 
@@ -34,6 +35,6 @@ void Port_Init(const Port_ConfigType* ConfigPtr) {
 	}
 
 	for (i = 0; i < ConfigPtr->num_pins; i++) {
-		brd_set_port_pad(ConfigPtr->pin[i].pin_id, &ConfigPtr->pin[i];
+		brd_set_port_pad(ConfigPtr->pin[i].pin_id, (PortPin*)&ConfigPtr->pin[i]);
 	} 
 }

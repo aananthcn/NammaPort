@@ -36,7 +36,7 @@ typedef enum {
 } Port_PinDirectionType;
 
 
-typedef uint8 Port_PinModeType;
+typedef uint16 Port_PinModeType;
 
 #define PORT_PIN_LEVEL_LOW      0
 #define PORT_PIN_LEVEL_HIGH     1
