@@ -31,5 +31,14 @@ Port_ConfigType PortConfigs = {
 		.pin_initial_mode = PORT_PIN_MODE_CAN,
 		.pin_dir_changeable = TRUE,
 		.pin_mode_changeable = TRUE
+	},
+	.pin[3] = {
+		.pin_id = 1,
+		.pin_dir = PORT_PIN_IN,
+		.pin_mode = PORT_PIN_MODE_FLEXRAY,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_FLEXRAY,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
 	}
 };

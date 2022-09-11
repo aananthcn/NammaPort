@@ -17,7 +17,7 @@ typedef struct {
 } PortPin;
 
 
-#define PORT_NUM_OF_PINS  (3)
+#define PORT_NUM_OF_PINS  (4)
 typedef struct {
 	Port_PinType num_pins;
 	PortPin pin[PORT_NUM_OF_PINS];

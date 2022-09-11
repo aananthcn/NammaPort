@@ -25,69 +25,119 @@
 
 
 uint16 get_rp2040_mode(Port_PinModeType mode) {
-	uint16 brd_mode = 0xFFFF;
+        uint16 brd_mode = 0xFFFF;
 
-	switch (mode) {
-	case PORT_PIN_MODE_DIO:
-	case PORT_PIN_MODE_DIO_GPT:
-	case PORT_PIN_MODE_DIO_WDG:
-		brd_mode = GPIO_FUNC_SIO;
-		break;
-	case PORT_PIN_MODE_ICU:
-	case PORT_PIN_MODE_PWM:
-		brd_mode = GPIO_FUNC_PWM;
-		break;
-	case PORT_PIN_MODE_SPI:
-		brd_mode = GPIO_FUNC_SPI;
-		break;
-	default:
-	case PORT_PIN_MODE_ADC:
-	case PORT_PIN_MODE_CAN:
-	case PORT_PIN_MODE_FLEXRAY:
-	case PORT_PIN_MODE_LIN:
-	case PORT_PIN_MODE_MEM:
-		break;
-	}
+        switch (mode) {
+        case PORT_PIN_MODE_DIO:
+        case PORT_PIN_MODE_DIO_GPT:
+        case PORT_PIN_MODE_DIO_WDG:
+                brd_mode = GPIO_FUNC_SIO;
+                break;
+        case PORT_PIN_MODE_ICU:
+        case PORT_PIN_MODE_PWM:
+                brd_mode = GPIO_FUNC_PWM;
+                break;
+        case PORT_PIN_MODE_SPI:
+                brd_mode = GPIO_FUNC_SPI;
+                break;
+        default:
+        case PORT_PIN_MODE_ADC:
+        case PORT_PIN_MODE_CAN:
+        case PORT_PIN_MODE_FLEXRAY:
+        case PORT_PIN_MODE_LIN:
+        case PORT_PIN_MODE_MEM:
+                break;
+        }
 
-	return brd_mode;
+        return brd_mode;
 }
 
 
 /* Raspberry Pi specific port mode set function */
-void brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
-	uint32 brd_mode;
-	uint32 pin_level;
-	uint32 pin_dir;
+uint8 brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
+        uint32 brd_mode;
+        uint32 pin_level;
+        uint32 pin_dir;
 
-	/* input validation */
-	if (NULL == pin_cfg) {
-		return;
-	}
+        /* input validation */
+        if (NULL == pin_cfg) {
+                return -1;
+        }
 
-	/* convert AUTOSAR pin mode to board specific pin mode */
-	brd_mode = pin_cfg->pin_mode;
-	if (pin_cfg->pin_mode >= PORT_PIN_MODE_ADC) {
-		brd_mode = get_rp2040_mode(pin_cfg->pin_mode);
-	}
+        /* convert AUTOSAR pin mode to board specific pin mode */
+        brd_mode = pin_cfg->pin_mode;
+        if (pin_cfg->pin_mode >= PORT_PIN_MODE_ADC) {
+                brd_mode = get_rp2040_mode(pin_cfg->pin_mode);
+        }
 
-	/* pin direction related settings */
-	if (pin_cfg->pin_dir == PORT_PIN_IN) {
-		pin_dir = 0xC0;
-	}
-	else {
-		pin_dir = 0;
-	}
+        /* pin direction related settings */
+        if (pin_cfg->pin_dir == PORT_PIN_IN) {
+                pin_dir = 0xC0;
+        }
+        else {
+                pin_dir = 0;
+        }
 
-	/* set the PADS_BANK0 or 1  */
-	SET_PAD_GPIO(pin_id, pin_dir);
+        /* set the PADS_BANK0 or 1  */
+        SET_PAD_GPIO(pin_id, pin_dir);
 
-	/* initial pin level */
-	if (pin_cfg->pin_level == PORT_PIN_LEVEL_HIGH) {
-		pin_level = 0x3 << 8;
-	}
-	else {
-		pin_level = 0x2 << 8;
-	}
+        /* initial pin level */
+        if (pin_cfg->pin_level == PORT_PIN_LEVEL_HIGH) {
+                pin_level = 0x3 << 8;
+        }
+        else {
+                pin_level = 0x2 << 8;
+        }
 
-	SET_GPIO_CTRL(pin_id, ((0x3 << 12) | pin_level | brd_mode));
+        SET_GPIO_CTRL(pin_id, ((0x3 << 12) | pin_level | brd_mode));
+        return 0;
+}
+
+
+
+uint8 brd_set_pin_direction(Port_PinType pin_id, Port_PinDirectionType dir) {
+        uint32 pad_reg;
+
+        pad_reg = GET_PAD_GPIO(pin_id)
+        if (dir == PORT_PIN_IN) {
+                pad_reg |= 0xC0;
+        }
+        else {
+                pad_reg &= ~(0xC0);
+        }
+
+        /* set the PADS_BANK0 or 1  */
+        SET_PAD_GPIO(pin_id, pad_reg);
+
+        return 0;
+}
+
+
+Port_PinDirectionType brd_get_pin_direction(Port_PinType pin_id) {
+        Port_PinDirectionType pin_dir = PORT_PIN_OUT;
+        uint32 pad_reg;
+
+        pad_reg = GET_PAD_GPIO(pin_id)
+        if ((pad_reg & 0xC0) == 0xC0) {
+                pin_dir = PORT_PIN_IN;
+        }
+
+        return pin_dir;
+}
+
+
+uint8 brd_set_pin_mode(Port_PinType pin_id, Port_PinModeType pin_mode) {
+        uint32 brd_mode;
+        uint32 ctrl_reg;
+
+        brd_mode = pin_mode;
+        if (pin_mode >= PORT_PIN_MODE_ADC) {
+                brd_mode = get_rp2040_mode(pin_mode);
+        }
+
+        /* mask the last 5 bits (FUNCSEL) */
+        ctrl_reg = GET_GPIO_CTRL(pin_id) & ~(0x1f);
+        SET_GPIO_CTRL(pin_id, ctrl_reg | brd_mode);
+
+        return 0;
 }
