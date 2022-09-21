@@ -98,12 +98,13 @@ uint8 brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
 uint8 brd_set_pin_direction(Port_PinType pin_id, Port_PinDirectionType dir) {
         uint32 pad_reg;
 
-        pad_reg = GET_PAD_GPIO(pin_id)
+        pad_reg = GET_PAD_GPIO(pin_id);
         if (dir == PORT_PIN_IN) {
                 pad_reg |= 0xC0;
         }
         else {
                 pad_reg &= ~(0xC0);
+                SIO_GPIO_OE |= 1 << pin_id;
         }
 
         /* set the PADS_BANK0 or 1  */
@@ -117,7 +118,7 @@ Port_PinDirectionType brd_get_pin_direction(Port_PinType pin_id) {
         Port_PinDirectionType pin_dir = PORT_PIN_OUT;
         uint32 pad_reg;
 
-        pad_reg = GET_PAD_GPIO(pin_id)
+        pad_reg = GET_PAD_GPIO(pin_id);
         if ((pad_reg & 0xC0) == 0xC0) {
                 pin_dir = PORT_PIN_IN;
         }

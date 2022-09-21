@@ -30,7 +30,7 @@ void Port_Init(const Port_ConfigType* ConfigPtr) {
 	PortPin *pin;
 
 	if (NULL == ConfigPtr) {
-		// TODO: PORT_E_PARAM_POINTER
+		// TODO: raise PORT_E_PARAM_POINTER DET error
 		return;
 	}
 

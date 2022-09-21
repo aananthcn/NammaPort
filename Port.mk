@@ -1,10 +1,3 @@
-#COMPILER=
-#CC=${COMPILER}gcc
-#LD=${COMPILER}gcc
-#AS=${COMPILER}as
-#OBJCOPY=${COMPILER}objcopy
-#ARCH = x86
-
 INCDIRS  += -I ${PORT_PATH}/src \
 	    -I ${PORT_PATH}/api	\
 	    -I ${PORT_PATH}/cfg \
