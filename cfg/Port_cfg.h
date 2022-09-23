@@ -17,7 +17,7 @@ typedef struct {
 } PortPin;
 
 
-#define PORT_NUM_OF_PINS  (2)
+#define PORT_NUM_OF_PINS  (1)
 typedef struct {
 	Port_PinType num_pins;
 	PortPin pin[PORT_NUM_OF_PINS];
@@ -25,7 +25,7 @@ typedef struct {
 
 extern Port_ConfigType PortConfigs;
 
-#define MAX_PORT_ID  (200)
+#define MAX_PORT_ID  (25)
 
 
 

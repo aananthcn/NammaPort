@@ -23,6 +23,8 @@
 #include <Port_cfg.h>
 #include <stddef.h>
 
+#include <brd_port.h>
+
 
 uint16 get_rp2040_mode(Port_PinModeType mode) {
         uint16 brd_mode = 0xFFFF;
@@ -56,7 +58,6 @@ uint16 get_rp2040_mode(Port_PinModeType mode) {
 /* Raspberry Pi specific port mode set function */
 uint8 brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
         uint32 brd_mode;
-        uint32 pin_level;
         uint32 pin_dir;
 
         /* input validation */
@@ -81,15 +82,18 @@ uint8 brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
         /* set the PADS_BANK0 or 1  */
         SET_PAD_GPIO(pin_id, pin_dir);
 
+        /* GPIO func_sel & output enable settings */
+        SET_GPIO_CTRL(pin_id, ((0x3 << 12) | brd_mode));
+        SIO_GPIO_OE |= 1 << pin_id;
+
         /* initial pin level */
         if (pin_cfg->pin_level == PORT_PIN_LEVEL_HIGH) {
-                pin_level = 0x3 << 8;
+                SIO_GPIO_OUT |= 1 << pin_id;
         }
         else {
-                pin_level = 0x2 << 8;
+                SIO_GPIO_OUT &= ~(1 << pin_id);
         }
 
-        SET_GPIO_CTRL(pin_id, ((0x3 << 12) | pin_level | brd_mode));
         return 0;
 }
 
@@ -104,7 +108,6 @@ uint8 brd_set_pin_direction(Port_PinType pin_id, Port_PinDirectionType dir) {
         }
         else {
                 pad_reg &= ~(0xC0);
-                SIO_GPIO_OE |= 1 << pin_id;
         }
 
         /* set the PADS_BANK0 or 1  */
