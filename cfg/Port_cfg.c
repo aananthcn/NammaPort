@@ -6,11 +6,65 @@
 Port_ConfigType PortConfigs = {
 	.num_pins = PORT_NUM_OF_PINS,
 	.pin[0] = {
+		.pin_id = 4,
+		.pin_dir = PORT_PIN_OUT,
+		.pin_mode = PORT_PIN_MODE_LIN,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_LIN,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[1] = {
+		.pin_id = 5,
+		.pin_dir = PORT_PIN_IN,
+		.pin_mode = PORT_PIN_MODE_LIN,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_LIN,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[2] = {
 		.pin_id = 25,
 		.pin_dir = PORT_PIN_OUT,
 		.pin_mode = PORT_PIN_MODE_DIO,
 		.pin_level = PORT_PIN_LEVEL_LOW,
 		.pin_initial_mode = PORT_PIN_MODE_DIO,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[3] = {
+		.pin_id = 0,
+		.pin_dir = PORT_PIN_IN,
+		.pin_mode = PORT_PIN_MODE_SPI,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_SPI,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[4] = {
+		.pin_id = 1,
+		.pin_dir = PORT_PIN_OUT,
+		.pin_mode = PORT_PIN_MODE_SPI,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_SPI,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[5] = {
+		.pin_id = 2,
+		.pin_dir = PORT_PIN_OUT,
+		.pin_mode = PORT_PIN_MODE_SPI,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_SPI,
+		.pin_dir_changeable = FALSE,
+		.pin_mode_changeable = FALSE
+	},
+	.pin[6] = {
+		.pin_id = 3,
+		.pin_dir = PORT_PIN_OUT,
+		.pin_mode = PORT_PIN_MODE_SPI,
+		.pin_level = PORT_PIN_LEVEL_LOW,
+		.pin_initial_mode = PORT_PIN_MODE_SPI,
 		.pin_dir_changeable = FALSE,
 		.pin_mode_changeable = FALSE
 	}

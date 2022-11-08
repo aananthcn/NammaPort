@@ -42,11 +42,13 @@ uint16 get_rp2040_mode(Port_PinModeType mode) {
         case PORT_PIN_MODE_SPI:
                 brd_mode = GPIO_FUNC_SPI;
                 break;
+        case PORT_PIN_MODE_LIN:
+                brd_mode = GPIO_FUNC_UART;
+                break;
         default:
         case PORT_PIN_MODE_ADC:
         case PORT_PIN_MODE_CAN:
         case PORT_PIN_MODE_FLEXRAY:
-        case PORT_PIN_MODE_LIN:
         case PORT_PIN_MODE_MEM:
                 break;
         }
