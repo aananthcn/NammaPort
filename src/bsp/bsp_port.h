@@ -24,10 +24,10 @@
 #include <port_types.h>
 
 
-uint8 brd_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg);
-uint8 brd_set_pin_direction(Port_PinType pin_id, Port_PinDirectionType dir);
-uint8 brd_get_pin_direction(Port_PinType pin_id);
-uint8 brd_set_pin_mode(Port_PinType pin_id, Port_PinModeType pin_mode);
+uint8 bsp_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg);
+uint8 bsp_set_pin_direction(Port_PinType pin_id, Port_PinDirectionType dir);
+uint8 bsp_get_pin_direction(Port_PinType pin_id);
+uint8 bsp_set_pin_mode(Port_PinType pin_id, Port_PinModeType pin_mode);
 
 
 #endif
