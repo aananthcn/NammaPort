@@ -44,9 +44,9 @@ Port_ConfigType PortConfigs = {
 	.pin[4] = {
 		.pin_id = 1,
 		.pin_dir = PORT_PIN_OUT,
-		.pin_mode = PORT_PIN_MODE_SPI,
-		.pin_level = PORT_PIN_LEVEL_LOW,
-		.pin_initial_mode = PORT_PIN_MODE_SPI,
+		.pin_mode = PORT_PIN_MODE_DIO,
+		.pin_level = PORT_PIN_LEVEL_HIGH,
+		.pin_initial_mode = PORT_PIN_MODE_DIO,
 		.pin_dir_changeable = FALSE,
 		.pin_mode_changeable = FALSE
 	},
