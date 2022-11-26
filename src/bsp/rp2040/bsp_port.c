@@ -60,7 +60,8 @@ uint16 get_rp2040_mode(Port_PinModeType mode) {
 /* Raspberry Pi specific port mode set function */
 uint8 bsp_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
         uint32 bsp_mode;
-        uint32 pin_dir;
+        uint8 pin_dir = 0;
+        uint8 slewf = 0;
 
         /* input validation */
         if (NULL == pin_cfg) {
@@ -77,23 +78,29 @@ uint8 bsp_set_port_pad(Port_PinType pin_id, PortPin *pin_cfg) {
         if (pin_cfg->pin_dir == PORT_PIN_IN) {
                 pin_dir = 0xC0;
         }
-        else {
-                pin_dir = 0;
+
+        /* Slew rate control */
+        if (bsp_mode == GPIO_FUNC_SPI) {
+                slewf = 0x01; // Fast
         }
 
         /* set the PADS_BANK0 or 1  */
-        SET_PAD_GPIO(pin_id, pin_dir);
+        SET_PAD_GPIO(pin_id, pin_dir|slewf);
 
         /* GPIO func_sel & output enable settings */
-        SET_GPIO_CTRL(pin_id, ((0x3 << 12) | bsp_mode));
-        SIO_GPIO_OE |= 1 << pin_id;
+        SET_GPIO_CTRL(pin_id, bsp_mode);
 
-        /* initial pin level */
-        if (pin_cfg->pin_level == PORT_PIN_LEVEL_HIGH) {
-                SIO_GPIO_OUT |= 1 << pin_id;
-        }
-        else {
-                SIO_GPIO_OUT &= ~(1 << pin_id);
+        /* Set additional GPIO setting if mode == GPIO */
+        if (bsp_mode == GPIO_FUNC_SIO) {
+                SIO_GPIO_OE |= 1 << pin_id;
+
+                /* initial pin level */
+                if (pin_cfg->pin_level == PORT_PIN_LEVEL_HIGH) {
+                        SIO_GPIO_OUT |= 1 << pin_id;
+                }
+                else {
+                        SIO_GPIO_OUT &= ~(1 << pin_id);
+                }
         }
 
         return 0;
