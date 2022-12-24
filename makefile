@@ -49,7 +49,7 @@ PORT_OBJS := \
 	${PORT_PATH}/cfg/Port_cfg.o
 
 
-LDFLAGS := -g
+LDFLAGS := -g -relocatable
 CFLAGS  := -Werror ${INCDIRS} -g
 ASFLAGS := ${INCDIRS} -g
 TARGET 	:= libPort.la
@@ -61,8 +61,7 @@ all: $(TARGET)
 LIB_OBJS := $(PORT_OBJS)
 
 $(TARGET): $(LIB_OBJS)
-	$(AR) r $@ $^
-	$(RANLIB) $@
+	$(LD) ${LDFLAGS} -o $@ $^
 
 clean:
 	$(RM) $(LIB_OBJS) $(TARGET)
