@@ -40,6 +40,7 @@ INCDIRS  += -I ${PORT_PATH}/src \
 	    -I ${MCU_STARTUP_PATH} \
 
 
+$(info  )
 $(info compiling Port source files)
 
 
