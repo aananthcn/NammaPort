@@ -38,6 +38,7 @@ INCDIRS  += -I ${PORT_PATH}/src \
  	    -I ${MCU_PATH}/src/common/api \
  	    -I ${MCU_PATH}/src/common/src \
 	    -I ${MCU_STARTUP_PATH} \
+	    -I ${OS_PATH}/include
 
 
 $(info  )

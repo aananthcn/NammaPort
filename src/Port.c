@@ -22,6 +22,8 @@
 #include <Port.h>
 #include <stddef.h>
 
+#include <os_api.h> // for pr_log()
+
 #include <bsp_port.h>
 
 
@@ -36,5 +38,7 @@ void Port_Init(const Port_ConfigType* ConfigPtr) {
 
 	for (i = 0; i < ConfigPtr->num_pins; i++) {
 		bsp_set_port_pad(ConfigPtr->pin[i].pin_id, (PortPin*)&ConfigPtr->pin[i]);
-	} 
+	}
+
+	pr_log("Port init complete!\n");
 }
