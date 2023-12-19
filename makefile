@@ -39,7 +39,7 @@ INCDIRS  += -I ${PORT_PATH}/src \
  	    -I ${MCU_PATH}/src/common/src \
 	    -I ${CAR_OS_INC_PATH}/autosar \
 	    -I ${CAR_OS_INC_PATH}/car_os \
-	    -I ${CAR_OS_BOARDS_PATH} \
+	    -I ${CAR_OS_BOARD_PATH} \
 	    -I ${OS_PATH}/include
 
 
