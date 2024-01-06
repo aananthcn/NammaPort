@@ -17,7 +17,7 @@ typedef struct {
 } PortPin;
 
 
-#define PORT_NUM_OF_PINS  (11)
+#define PORT_NUM_OF_PINS  (14)
 typedef struct {
 	Port_PinType num_pins;
 	PortPin pin[PORT_NUM_OF_PINS];
@@ -27,6 +27,19 @@ extern Port_ConfigType PortConfigs;
 
 #define MAX_PORT_ID  (25)
 
+
+
+extern const struct gpio_dt_spec gpiopin25;
+extern const struct gpio_dt_spec gpiopin01;
+extern const struct gpio_dt_spec gpiopin16;
+extern const struct gpio_dt_spec gpiopin17;
+extern const struct gpio_dt_spec gpiopin18;
+extern const struct gpio_dt_spec gpiopin19;
+extern const struct gpio_dt_spec gpiopin20;
+extern const struct gpio_dt_spec gpiopin21;
+extern const struct gpio_dt_spec gpiopin22;
+
+const struct gpio_dt_spec *port_get_zephyr_dt_spec(int port_id);
 
 
 #endif

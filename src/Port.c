@@ -22,23 +22,34 @@
 #include <Port.h>
 #include <stddef.h>
 
-#include <os_api.h> // for pr_log()
 
-#include <bsp_port.h>
+#include <zephyr/logging/log.h> // for LOG_DBG()
+
+/// @brief Initializes ports based on device tree structure
+/// @param  none
+/// @return 0 if all is well. Negative port number in case of error.
+int port_zephyr_dt_init(void); // defined in Port_cfg.c
 
 
+// Global variables
+LOG_MODULE_REGISTER(Port, LOG_LEVEL_DBG);
+
+
+/// @brief Initializes ports as per AUTOSAR specification
+/// @param ConfigPtr 
 void Port_Init(const Port_ConfigType* ConfigPtr) {
-	int i;
-	PortPin *pin;
+	int retval;
 
 	if (NULL == ConfigPtr) {
-		// TODO: raise PORT_E_PARAM_POINTER DET error
+		LOG_DBG("ERROR: %s initialization failed as argument passed is invalid!", __func__);
 		return;
 	}
 
-	for (i = 0; i < ConfigPtr->num_pins; i++) {
-		bsp_set_port_pad(ConfigPtr->pin[i].pin_id, (PortPin*)&ConfigPtr->pin[i]);
+	retval = port_zephyr_dt_init();
+	if (0 != retval) {
+		LOG_DBG("ERROR: %s initialization failed for pin %d!", __func__, -retval);
+		return;
 	}
 
-	pr_log("Port init complete!\n");
+	LOG_DBG("%s complete!\n", __func__);
 }

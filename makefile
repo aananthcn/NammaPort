@@ -32,7 +32,6 @@ include ${CAR_OS_PATH}/path_defs.mk
 INCDIRS  += -I ${PORT_PATH}/src \
 	    -I ${PORT_PATH}/api	\
 	    -I ${PORT_PATH}/cfg \
-	    -I ${PORT_PATH}/src/bsp \
 	    -I ${MCU_PATH}/src \
 	    -I ${CAR_OS_INC_PATH}/autosar \
 	    -I ${CAR_OS_INC_PATH}/car_os \
@@ -46,7 +45,6 @@ $(info compiling Port source files)
 
 PORT_OBJS := \
 	${PORT_PATH}/src/Port.o \
-	${PORT_PATH}/src/bsp/rp2040/bsp_port.o \
 	${PORT_PATH}/cfg/Port_cfg.o
 
 
