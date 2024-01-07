@@ -10,8 +10,8 @@
 		gpiopin17-gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
 		gpiopin18-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
 		gpiopin19-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>;
-		gpiopin20-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
-		gpiopin21-gpios = <&gpio0 21 GPIO_ACTIVE_LOW>;
-		gpiopin22-gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
+		gpiopin20-gpios = <&gpio0 20 GPIO_ACTIVE_HIGH>;
+		gpiopin21-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;
+		gpiopin22-gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
 	};
 };
