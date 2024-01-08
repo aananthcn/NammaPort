@@ -26,18 +26,16 @@ RANLIB=${COMPILER}ranlib
 OBJCOPY=${COMPILER}objcopy
 
 
-include ${ROOT_DIR}/path_defs.mk
+include ${CAR_OS_PATH}/path_defs.mk
 
 
 INCDIRS  += -I ${PORT_PATH}/src \
 	    -I ${PORT_PATH}/api	\
 	    -I ${PORT_PATH}/cfg \
-	    -I ${PORT_PATH}/src/bsp \
 	    -I ${MCU_PATH}/src \
- 	    -I ${MCU_PATH}/src/common \
- 	    -I ${MCU_PATH}/src/common/api \
- 	    -I ${MCU_PATH}/src/common/src \
-	    -I ${MCU_STARTUP_PATH} \
+	    -I ${CAR_OS_INC_PATH}/autosar \
+	    -I ${CAR_OS_INC_PATH}/car_os \
+	    -I ${CAR_OS_BOARDSOC_PATH} \
 	    -I ${OS_PATH}/include
 
 
@@ -47,23 +45,29 @@ $(info compiling Port source files)
 
 PORT_OBJS := \
 	${PORT_PATH}/src/Port.o \
-	${PORT_PATH}/src/bsp/rp2040/bsp_port.o \
 	${PORT_PATH}/cfg/Port_cfg.o
 
 
-LDFLAGS := -g -relocatable
-CFLAGS  := -Werror ${INCDIRS} -g
-ASFLAGS := ${INCDIRS} -g
-TARGET 	:= libPort.la
+# LDFLAGS := -g -relocatable
+# CFLAGS  := -Werror ${INCDIRS} -g
+# ASFLAGS := ${INCDIRS} -g
+TARGET 	:= libPort.a
 # include c_l_flags.mk to add more definitions specific to micro-controller
-include ${ROOT_DIR}/c_l_flags.mk
+include ${CAR_OS_PATH}/c_l_flags.mk
+
+
+%.o: %.c
+	$(CC) -c ${CFLAGS} ${INCDIRS} $< -o $@
+
 
 all: $(TARGET)
 
 LIB_OBJS := $(PORT_OBJS)
 
 $(TARGET): $(LIB_OBJS)
-	$(LD) ${LDFLAGS} -o $@ $^
+	$(AR) -rcs ${TARGET} ${LIB_OBJS}
+
+#	$(LD) ${LDFLAGS} -o $@ $^
 
 clean:
 	$(RM) $(LIB_OBJS) $(TARGET)
