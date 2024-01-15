@@ -51,5 +51,5 @@ void Port_Init(const Port_ConfigType* ConfigPtr) {
 		return;
 	}
 
-	LOG_DBG("%s complete!", __func__);
+	LOG_DBG("Init complete!");
 }
